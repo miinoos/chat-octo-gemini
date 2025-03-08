@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { marked } from "marked";
 import "./App.css";
 
 function App() {
@@ -11,9 +12,15 @@ function App() {
 
   const handleGetResponse = async () => {
     try {
-      const res = await fetch("http://localhost:4000/chat/api");
+      const res = await fetch("http://localhost:4000/chat/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message }),
+      });
       const data = await res.text();
-      setResponse(data);
+      setResponse(marked(data));
     } catch (error) {
       console.error("Error fetching response:", error);
     }
@@ -23,7 +30,7 @@ function App() {
     <>
       <input type="text" onChange={handleMessageChange} value={message} />
       <button onClick={handleGetResponse}>Send</button>
-      <p>{response}</p>
+      <div dangerouslySetInnerHTML={{ __html: response }} />
     </>
   );
 }
