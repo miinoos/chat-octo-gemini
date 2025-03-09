@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { marked } from "marked";
-import "./App.css";
+import Chatbot from "./components/Chatbot";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -31,6 +31,7 @@ function App() {
       <input type="text" onChange={handleMessageChange} value={message} />
       <button onClick={handleGetResponse}>Send</button>
       <div dangerouslySetInnerHTML={{ __html: response }} />
+      <Chatbot />
     </>
   );
 }
